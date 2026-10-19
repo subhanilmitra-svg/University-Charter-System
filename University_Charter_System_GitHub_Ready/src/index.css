@@ -1,0 +1,144 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* --- THEME CONFIGURATION --- */
+/* Defines the core color palette and typography for the Industrial Blueprint aesthetic */
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --color-stone-grey: #F1F5F9;
+  --color-midnight: #334155;
+  --color-terracotta: #166534;
+  --color-sage: #0D9488;
+  --color-alert-red: #B91C1C;
+}
+
+/* --- BASE STYLES --- */
+/* Global resets and foundational element styling */
+@layer base {
+  body {
+    @apply bg-stone-grey text-midnight font-mono;
+    background-image: radial-gradient(#334155 0.5px, transparent 0.5px);
+    background-size: 20px 20px;
+    background-position: -10px -10px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-extrabold uppercase tracking-tight leading-none text-midnight;
+  }
+
+  button {
+    @apply cursor-pointer transition-all duration-100;
+    border-radius: 0 !important;
+  }
+
+  input {
+    @apply font-mono;
+    border-radius: 0 !important;
+  }
+}
+
+/* --- COMPONENT CLASSES --- */
+/* Reusable architectural UI patterns (Borders, Buttons, Cards) */
+@layer components {
+  .arch-border {
+    @apply border-2 border-midnight;
+  }
+
+  .arch-button {
+    @apply border-2 border-midnight bg-stone-grey px-4 py-2 font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 text-midnight;
+    box-shadow: 0px 0px 0px #334155;
+  }
+
+  .arch-button:hover {
+    box-shadow: 4px 4px 0px #334155;
+  }
+
+  .arch-button-primary {
+    @apply bg-terracotta text-white;
+  }
+
+  .arch-card {
+    @apply border-2 border-midnight bg-white p-6;
+  }
+
+  .progress-bar-container {
+    @apply h-4 w-full border-2 border-midnight bg-stone-grey overflow-hidden relative;
+  }
+
+  .progress-bar-fill {
+    @apply h-full bg-terracotta;
+  }
+}
+
+/* Custom Barcode for Ticket */
+.barcode {
+  display: flex;
+  height: 40px;
+  gap: 2px;
+}
+
+.barcode-line {
+  background: #334155;
+  height: 100%;
+}
+
+/* --- PRINT OPTIMIZATION --- */
+/* Configures the E-Ticket for professional A4 document generation */
+@page {
+  margin: 0;
+}
+
+@media print {
+  html, body {
+    height: auto !important;
+    margin: 0 !important;
+    background: white !important;
+    background-image: none !important;
+    display: block !important;
+  }
+  
+  header, .no-print, footer {
+    display: none !important;
+  }
+
+  main {
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .ticket-container {
+    width: 170mm !important;
+    max-width: 170mm !important;
+    border: 2px solid #334155 !important;
+    box-shadow: none !important;
+    position: relative !important;
+    margin: 20mm auto !important;
+    background: white !important;
+    page-break-after: avoid !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .arch-border {
+    border-color: #334155 !important;
+  }
+
+  /* Ensure background colors print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+@keyframes status-pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.animate-status-pulse {
+  animation: status-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
